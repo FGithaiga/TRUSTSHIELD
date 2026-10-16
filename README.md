@@ -1,10 +1,10 @@
-# TRUSTSHIELD 254: AI-POWERED COMMUNITY SCAM INTELLIGENCE AND DIGITAL TRUST PLATFORM
+# TRUSTSHIELD : AI-POWERED COMMUNITY SCAM INTELLIGENCE AND DIGITAL TRUST PLATFORM
 
 <div align="center">
 
 <img src="Images/TrustShield_254.png" alt="TrustShield 254 - AI-Powered Community Scam Intelligence Platform" width="900"/>
 
-# 🛡️ TrustShield 254
+# 🛡️ TrustShield 
 
 ### AI-Powered Community Scam Intelligence & Digital Trust Platform
 
