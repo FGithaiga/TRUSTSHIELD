@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="Images/TrustShield_254.png" alt="TrustShield 254 - AI-Powered Community Scam Intelligence Platform" width="900"/>
+<img src="Images/TrustShield_254.png" alt="TrustShield - AI-Powered Community Scam Intelligence Platform" width="900"/>
 
 # 🛡️ TrustShield 
 
@@ -13,9 +13,9 @@
 </div>
 
 # 📌 PROJECT OVERVIEW
-TrustShield 254 is an AI-powered cybersecurity platform designed to help Kenyan users identify suspicious online activities before they click links, pay for products, accept job offers, or share personal information. The system combines machine learning, natural language processing (NLP), and community-based reporting to analyze suspicious messages, URLs, job advertisements, and online marketplace listings.
+TrustShield is an AI-powered cybersecurity platform designed to help Kenyan users identify suspicious online activities before they click links, pay for products, accept job offers, or share personal information. The system combines machine learning, natural language processing (NLP), and community-based reporting to analyze suspicious messages, URLs, job advertisements, and online marketplace listings.
 The platform generates risk assessments, highlights potential warning signs, and provides practical safety recommendations. Its community intelligence component identifies repeated indicators across user reports, helping users recognize possible scam patterns that might otherwise go unnoticed.
-TrustShield 254 aims to promote digital trust, improve cybersecurity awareness, and contribute to a safer digital environment in Kenya.
+TrustShield  aims to promote digital trust, improve cybersecurity awareness, and contribute to a safer digital environment in Kenya.
 
 
 # ❗PROBLEM STATEMENT
