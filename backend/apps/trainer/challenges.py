@@ -1,0 +1,56 @@
+"""Fictional practice messages. Names, numbers and links are invented for training."""
+
+CHALLENGES = [
+    {"id": "mp-reversal", "scan_type": "mpesa", "answer": "scam",
+     "text": "Confirmed. You have received Ksh 3,500.00 from JOHN KAMAU on 14/10/26 at 9:41 PM. Hello, I sent this money to you by mistake, please reverse it to 0712 000 111 urgently, my child is in hospital.",
+     "lesson": "Fake reversal. There is no transaction code, the amount has a space after Ksh, and a real wrong transfer is reversed through Safaricom, never by you sending money back."},
+    {"id": "mp-genuine-till", "scan_type": "mpesa", "answer": "safe",
+     "text": "TJK4ABCD12 Confirmed. Ksh250.00 paid to MAMA MBOGA SHOP. on 12/10/26 at 7:42 AM. New M-PESA balance is Ksh3,210.00. Transaction cost, Ksh0.00.",
+     "lesson": "This follows the usual M-PESA layout: transaction code first, Ksh250.00 without a space and a balance line. Formats can be copied, so still confirm payments on your own phone."},
+    {"id": "mp-pin", "scan_type": "mpesa", "answer": "scam",
+     "text": "SAFARICOM: Your M-PESA account will be suspended within 24 hours. To keep it active reply with your M-PESA PIN and the OTP code sent to you now.",
+     "lesson": "Safaricom never asks for your PIN or OTP. A threat of suspension is pressure to stop you thinking."},
+    {"id": "mp-prize", "scan_type": "mpesa", "answer": "scam",
+     "text": "CONGRATULATIONS! You have won Ksh 50,000 in the Shangwe promotion. To claim, pay a processing fee of Ksh 1,200 to till 000000 then visit http://safaricom-rewards-update.com/claim/now",
+     "lesson": "If you must pay to receive a prize, it is not a prize. The link uses the Safaricom name on a domain Safaricom does not own."},
+    {"id": "mp-friend", "scan_type": "mpesa", "answer": "safe",
+     "text": "Nimekutumia 500 ya lunch, tutaonana kesho kazini. Uko poa?",
+     "lesson": "An ordinary note from a friend: no request for money back, no link, no secrets. Still, if you were expecting money, check your balance rather than trusting any message."},
+    {"id": "mp-fuliza", "scan_type": "mpesa", "answer": "scam",
+     "text": "Your Fuliza limit has been increased to Ksh 50,000. Activate it immediately at http://fuliza-ke.online/activate before it expires tonight.",
+     "lesson": "Limit changes are shown in the official M-PESA menu, not through links. The deadline and the unofficial .online domain are warning signs."},
+    {"id": "url-bonus", "scan_type": "url", "answer": "scam",
+     "text": "http://mpesa-bonus-ke.xyz/login",
+     "lesson": "A brand name on a cheap .xyz domain, no HTTPS and a login page: three classic phishing signs."},
+    {"id": "url-kra", "scan_type": "url", "answer": "safe",
+     "text": "https://www.kra.go.ke",
+     "lesson": "Government sites in Kenya end in .go.ke. Type addresses like this yourself rather than following links in messages."},
+    {"id": "url-ip", "scan_type": "url", "answer": "scam",
+     "text": "http://197.0.0.12/mpesa/verify-account?id=7781",
+     "lesson": "Real services use names, not bare IP addresses. Asking you to verify an account is a common lure."},
+    {"id": "url-short", "scan_type": "url", "answer": "scam",
+     "text": "https://bit.ly/claim-bonus-ke",
+     "lesson": "A shortened link hides where it really goes. Combined with words like claim and bonus, treat it as a scam."},
+    {"id": "job-fee", "scan_type": "offer", "offer_type": "job", "answer": "scam",
+     "text": "URGENT HIRING: Data entry clerks, work from home. Earn Ksh 3,000 per day, no experience or interview required. Pay a registration fee of Ksh 500 to secure your slot. Contact HR on WhatsApp only.",
+     "lesson": "Genuine employers never charge you to apply. No interview, high pay for easy work and WhatsApp-only contact complete the picture."},
+    {"id": "job-real", "scan_type": "offer", "offer_type": "job", "answer": "safe",
+     "text": "We are hiring an Accounts Assistant at our Nairobi office. Applicants should hold a CPA qualification. Shortlisted candidates will be invited for an interview. Apply through our careers page by 30 November.",
+     "lesson": "Clear requirements, an interview and an official application channel. Still confirm the company exists before sharing documents."},
+    {"id": "invest", "scan_type": "offer", "offer_type": "investment", "answer": "scam",
+     "text": "Double your money in 7 days! Invest from Ksh 1,000 and receive guaranteed returns of 100%. Limited slots, offer ends tonight. Send to the agent number to join.",
+     "lesson": "No real investment can guarantee doubling your money. Deadlines and paying an agent's personal number are red flags."},
+    {"id": "phone-deal", "scan_type": "offer", "offer_type": "shopping", "answer": "scam",
+     "text": "Brand new iPhone for only Ksh 9,999. Pay full amount first via M-PESA and we deliver in 2 hours. Stock is limited, pay now to reserve.",
+     "lesson": "A price far below market and full payment before delivery leave you with nothing if the seller disappears."},
+]
+
+BY_ID = {c["id"]: c for c in CHALLENGES}
+
+LEVELS = [
+    # (name, minimum answers, minimum accuracy %)
+    ("Scam Spotter", 40, 85),
+    ("Sharp Eye", 20, 75),
+    ("Alert", 10, 60),
+    ("Learner", 0, 0),
+]

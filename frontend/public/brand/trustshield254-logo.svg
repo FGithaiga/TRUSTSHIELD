@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 64">
+  <path d="M32 4.5 51.5 11v18.2c0 14-8.3 24.3-19.5 30.3C20.8 53.5 12.5 43.2 12.5 29.2V11L32 4.5Z" fill="#10243A" stroke="#2868D7" stroke-width="3.4" stroke-linejoin="round"/>
+  <path d="M32 13.5c5.6 5 8.3 11 8.3 17.6S37.6 43.7 32 48.7c-5.6-5-8.3-11-8.3-17.6S26.4 18.5 32 13.5Z" fill="#2868D7"/>
+  <path d="M23.8 31.6 29.6 37.4 41 25.2" fill="none" stroke="#10243A" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23.8 31.6 29.6 37.4 41 25.2" fill="none" stroke="#69DFBD" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="66" y="42" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="30" font-weight="800" letter-spacing="-0.6" fill="#10243A">TrustShield<tspan fill="#2868D7"> 254</tspan></text>
+</svg>

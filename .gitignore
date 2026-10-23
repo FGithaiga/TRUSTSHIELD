@@ -30,3 +30,12 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Backend (Django)
+backend/db.sqlite3
+backend/staticfiles/
+
+# Frontend (Vite)
+node_modules/
+frontend/dist/
+backend/exports/

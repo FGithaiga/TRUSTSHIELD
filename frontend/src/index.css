@@ -1,0 +1,225 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* Brand palette
+     Navy #10243A, Deep Blue #123A54, Action Blue #2868D7, Dark Blue #1D54B2,
+     Mint #69DFBD, Green #13866C, Background #F5F7FA, Border #E3E9F0 */
+
+  /* Navy scale: always-dark surfaces (sidebar, heroes, dark cards). Same in both themes. */
+  --color-ink-950: #0a1828;
+  --color-ink-900: #10243a;
+  --color-ink-800: #123a54;
+  --color-ink-700: #1b4a68;
+  --color-ink-600: #2b5a78;
+
+  /* Text on always-dark surfaces. Fixed so it stays readable in both themes. */
+  --color-mist-100: #eef3f8;
+  --color-mist-200: #d5dfea;
+  --color-mist-300: #b9c7d6;
+  --color-mist-400: #93a6bb;
+  --color-mist-500: #8a9cb1;
+
+  /* Action blue. 600 = Action Blue, 700 = Dark Blue. Solid fills, same in both themes. */
+  --color-brand-400: #5a8fe3;
+  --color-brand-500: #3a78dc;
+  --color-brand-600: #2868d7;
+  --color-brand-700: #1d54b2;
+  /* Tints and blue text: these flip in dark mode (see .dark below). */
+  --color-brand-50: #eef4fd;
+  --color-brand-100: #dbe7fa;
+  --color-brand-200: #b9d0f3;
+  --color-brand-ink: #1d54b2;
+
+  /* Mint accent (highlights on navy surfaces) */
+  --color-mint-300: #69dfbd;
+  --color-mint-400: #4fd6af;
+  /* Warning text on navy surfaces (fixed in both themes) */
+  --color-coral-300: #ffa8a8;
+
+  /* Muted text greys, darkened from Tailwind's defaults so they pass WCAG AA (4.5:1)
+     on both white cards and the off-white page background. */
+  --color-slate-400: #607089;
+  --color-slate-500: #536479;
+
+  /* Theme surfaces and text */
+  --color-canvas: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-line: #e3e9f0;
+  --color-line-strong: #cdd7e2;
+  --color-fg: #10243a;
+  /* Second single-series chart colour (Deep Blue / Mint) */
+  --color-chart-2: #123a54;
+
+  /* Risk. Solid fills stay constant; *-fg text and tinted backgrounds flip in dark mode. */
+  --color-risk-high: #d03b3b;
+  --color-risk-high-hover: #b83131;
+  --color-risk-high-fg: #c23434;
+  --color-risk-high-bg: #fdf3f3;
+  --color-risk-high-line: #f3caca;
+  --color-risk-caution-dot: #fab219;
+  --color-risk-caution-fg: #9a6400;
+  --color-risk-caution-bg: #fff8e9;
+  --color-risk-caution-line: #f6dfa8;
+  --color-risk-clear: #13866c;
+  --color-risk-clear-dot: #13866c;
+  --color-risk-clear-fg: #107560;
+  --color-risk-clear-bg: #ecf7f3;
+  --color-risk-clear-line: #bfe4d8;
+
+  --shadow-card: 0 1px 2px rgb(16 36 58 / 0.04), 0 4px 16px -4px rgb(16 36 58 / 0.06);
+  --shadow-lift: 0 2px 4px rgb(16 36 58 / 0.05), 0 16px 40px -12px rgb(16 36 58 / 0.18);
+  --shadow-glow: 0 0 0 4px rgb(40 104 215 / 0.16);
+  --shadow-glow-strong: 0 0 0 1px rgb(90 143 227 / 0.5), 0 0 24px rgb(40 104 215 / 0.35);
+  --shadow-glow-danger: 0 0 0 4px rgb(208 59 59 / 0.14);
+
+  --animate-fade-up: fade-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  --animate-scale-in: scale-in 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-slide-in-right: slide-in-right 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-slide-in-left: slide-in-left 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-pulse-ring: pulse-ring 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
+  --animate-scan-line: scan-line 1.6s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgb(208 59 59 / 0.35); }
+    70% { box-shadow: 0 0 0 12px rgb(208 59 59 / 0); }
+    100% { box-shadow: 0 0 0 0 rgb(208 59 59 / 0); }
+  }
+  @keyframes slide-in-left {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes scan-line {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+}
+
+/* Dark theme: semantic tokens and the slate text scale flip; navy, brand solids and mist stay fixed. */
+.dark {
+  color-scheme: dark;
+  --color-canvas: #0b1828;
+  --color-surface: #11243b;
+  --color-line: #213a56;
+  --color-line-strong: #2f4b6b;
+  --color-fg: #e9eff6;
+  --color-chart-2: #4fd6af;
+
+  --color-brand-50: #15305a;
+  --color-brand-100: #1a3a6b;
+  --color-brand-200: #2a5394;
+  --color-brand-ink: #8db4f3;
+
+  --color-slate-50: #152a43;
+  --color-slate-100: #1a3049;
+  --color-slate-200: #24405e;
+  --color-slate-300: #345473;
+  --color-slate-400: #8296ad;
+  --color-slate-500: #9cadc1;
+  --color-slate-600: #b6c3d3;
+  --color-slate-700: #cfd9e5;
+  --color-slate-800: #e2e8f0;
+  --color-slate-900: #f1f5f9;
+
+  --color-risk-high-fg: #ff8a8a;
+  --color-risk-high-bg: #2b1820;
+  --color-risk-high-line: #5e2b33;
+  --color-risk-caution-fg: #f7c15a;
+  --color-risk-caution-bg: #2a2416;
+  --color-risk-caution-line: #5b4a1c;
+  --color-risk-clear-fg: #4fd3a8;
+  --color-risk-clear-dot: #1fa784;
+  --color-risk-clear-bg: #0f2b27;
+  --color-risk-clear-line: #1f5a4a;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px -4px rgb(0 0 0 / 0.35);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 16px 40px -12px rgb(0 0 0 / 0.6);
+}
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { @apply bg-canvas text-fg font-sans; font-feature-settings: "cv11", "ss01"; transition: background-color 0.25s ease, color 0.25s ease; }
+  ::selection { background: rgb(40 104 215 / 0.18); }
+  :focus-visible { outline: none; }
+  button, [role="button"] { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-surface shadow-card;
+  }
+  .field {
+    @apply w-full rounded-xl border border-line-strong bg-surface px-3.5 py-2.5 text-[15px] text-fg
+      placeholder:text-slate-400 transition-[border-color,box-shadow] duration-150
+      hover:border-slate-400 focus:border-brand-500 focus:shadow-glow;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-fg;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500;
+  }
+  .focus-ring {
+    @apply focus-visible:shadow-glow;
+  }
+  /* Dotted map-like texture, used instead of gradients on dark surfaces */
+  .dot-grid {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='1.5' cy='1.5' r='1.1' fill='%23ffffff' fill-opacity='0.07'/%3E%3C/svg%3E");
+  }
+  .line-grid {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M44 0H0v44' fill='none' stroke='%2310243a' stroke-opacity='0.05'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+  .scrollbar-thin { scrollbar-width: thin; scrollbar-color: rgb(255 255 255 / 0.15) transparent; }
+}
+
+/* Scroll reveal (see components/ui/Motion.jsx) */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal-stagger > * { opacity: 0; transform: translateY(18px); transition: opacity 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal-stagger.is-visible > * { opacity: 1; transform: none; }
+.reveal-stagger.is-visible > :nth-child(2) { transition-delay: 70ms; }
+.reveal-stagger.is-visible > :nth-child(3) { transition-delay: 140ms; }
+.reveal-stagger.is-visible > :nth-child(4) { transition-delay: 210ms; }
+.reveal-stagger.is-visible > :nth-child(5) { transition-delay: 280ms; }
+.reveal-stagger.is-visible > :nth-child(n + 6) { transition-delay: 350ms; }
+
+/* Theme switch happens in one frame without every element animating its colours. */
+.theme-switching *, .theme-switching *::before, .theme-switching *::after { transition: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
