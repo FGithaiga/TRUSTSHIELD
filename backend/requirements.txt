@@ -17,3 +17,4 @@ scipy==1.18.1
 # Testing
 pytest==9.1.1
 pytest-django==4.14.0
+gunicorn
