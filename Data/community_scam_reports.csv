@@ -1,11 +1,11 @@
-report_id,report_date,report_type,platform,suspicious_url,phone_number,seller_id,description,verification_status,is_suspicious
-CSR001,2026-10-01,Phishing,SMS,http://login.example.com,SYNTHETIC_PHONE_001,N/A,Message requests account login details through a suspicious link.,Unverified,1
-CSR002,2026-10-02,Fake Job,WhatsApp,http://jobs.example.org,SYNTHETIC_PHONE_002,N/A,Recruiter requests an upfront registration fee.,Unverified,1
-CSR003,2026-10-03,Fake Online Shop,TikTok,http://shop.example.net,SYNTHETIC_PHONE_003,SELLER_SYN_001,Seller requests full payment before delivery and stops responding.,Unverified,1
-CSR004,2026-10-04,Mobile Money Scam,SMS,N/A,SYNTHETIC_PHONE_004,N/A,Message claims a prize was won and requests a payment to release it.,Unverified,1
-CSR005,2026-10-05,Impersonation,WhatsApp,N/A,SYNTHETIC_PHONE_005,N/A,Account pretends to represent a trusted organization and requests personal details.,Unverified,1
-CSR006,2026-10-06,Phishing,Email,http://login.example.com,N/A,N/A,Another report identifies the same suspicious login link.,Unverified,1
-CSR007,2026-10-07,Fake Online Shop,TikTok,http://shop.example.net,SYNTHETIC_PHONE_003,SELLER_SYN_001,Repeated report about the same synthetic shop and contact identifier.,Unverified,1
-CSR008,2026-10-08,Legitimate,Website,https://www.example.com,N/A,SELLER_SYN_002,Synthetic example of a normal website report with no suspicious indicators.,Unverified,0
-CSR009,2026-10-09,Legitimate,SMS,N/A,SYNTHETIC_PHONE_006,N/A,Synthetic example of a routine delivery notification without a payment request.,Unverified,0
-CSR010,2026-10-10,Fake Job,Website,http://jobs.example.org,SYNTHETIC_PHONE_002,N/A,Repeated report about a job offer requiring payment before employment.,Unverified,1
+report_id,report_date,report_type,platform,suspicious_url,phone_number,seller_id,description,evidence_notes,verification_status,is_suspicious,report_source,last_updated
+CSR001,2026-10-01,Phishing,SMS,http://login.example.com,SYNTHETIC_PHONE_001,,Message requests account login details through a suspicious link.,Synthetic example of a request for account credentials.,Unverified,1,Synthetic Test Data,2026-10-27
+CSR002,2026-10-02,Fake Job,WhatsApp,http://jobs.example.org,SYNTHETIC_PHONE_002,,Recruiter requests an upfront registration fee.,Synthetic example of an upfront employment fee request.,Unverified,1,Synthetic Test Data,2026-10-27
+CSR003,2026-10-03,Fake Online Shop,TikTok,http://shop.example.net,SYNTHETIC_PHONE_003,SELLER_SYN_001,Seller requests full payment before delivery and stops responding.,Synthetic example of alleged non-delivery after payment.,Unverified,1,Synthetic Test Data,2026-10-27
+CSR004,2026-10-04,Mobile Money Scam,SMS,,SYNTHETIC_PHONE_004,,Message claims a prize was won and requests payment to release it.,Synthetic example of an advance-fee prize message.,Unverified,1,Synthetic Test Data,2026-10-27
+CSR005,2026-10-05,Impersonation,WhatsApp,,SYNTHETIC_PHONE_005,,Account pretends to represent a trusted organization and requests personal details.,Synthetic example of possible organizational impersonation.,Unverified,1,Synthetic Test Data,2026-10-27
+CSR006,2026-10-06,Phishing,Email,http://login.example.com,,,Another report identifies the same synthetic login link.,Synthetic repeat report for testing URL matching.,Unverified,1,Synthetic Test Data,2026-10-27
+CSR007,2026-10-07,Fake Online Shop,TikTok,http://shop.example.net,SYNTHETIC_PHONE_003,SELLER_SYN_001,Repeated report about the same synthetic shop and contact identifier.,Synthetic repeat report for testing seller and phone matching.,Unverified,1,Synthetic Test Data,2026-10-27
+CSR008,2026-10-08,Legitimate,Website,https://www.example.com,,SELLER_SYN_002,Synthetic example of a routine website with no known suspicious indicators.,Synthetic legitimate test case; not independently verified.,Unverified,0,Synthetic Test Data,2026-10-27
+CSR009,2026-10-09,Legitimate,SMS,,SYNTHETIC_PHONE_006,,Synthetic example of a routine delivery notification without a payment request.,Synthetic legitimate message example for testing.,Unverified,0,Synthetic Test Data,2026-10-27
+CSR010,2026-10-10,Fake Job,Website,http://jobs.example.org,SYNTHETIC_PHONE_002,,Repeated report about a job offer requiring payment before employment.,Synthetic repeat report for testing URL and phone matching.,Unverified,1,Synthetic Test Data,2026-10-27

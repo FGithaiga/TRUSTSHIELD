@@ -1,0 +1,13 @@
+indicator_type,indicator_value,report_count,first_report,last_report,different_report_types,different_platforms,data_source
+suspicious_url,http://jobs.example.org,2,2026-10-02,2026-10-10,1,2,Synthetic Test Data
+suspicious_url,http://login.example.com,2,2026-10-01,2026-10-06,1,2,Synthetic Test Data
+suspicious_url,http://shop.example.net,2,2026-10-03,2026-10-07,1,1,Synthetic Test Data
+suspicious_url,https://www.example.com,1,2026-10-08,2026-10-08,1,1,Synthetic Test Data
+phone_number,SYNTHETIC_PHONE_001,1,2026-10-01,2026-10-01,1,1,Synthetic Test Data
+phone_number,SYNTHETIC_PHONE_002,2,2026-10-02,2026-10-10,1,2,Synthetic Test Data
+phone_number,SYNTHETIC_PHONE_003,2,2026-10-03,2026-10-07,1,1,Synthetic Test Data
+phone_number,SYNTHETIC_PHONE_004,1,2026-10-04,2026-10-04,1,1,Synthetic Test Data
+phone_number,SYNTHETIC_PHONE_005,1,2026-10-05,2026-10-05,1,1,Synthetic Test Data
+phone_number,SYNTHETIC_PHONE_006,1,2026-10-09,2026-10-09,1,1,Synthetic Test Data
+seller_id,SELLER_SYN_001,2,2026-10-03,2026-10-07,1,1,Synthetic Test Data
+seller_id,SELLER_SYN_002,1,2026-10-08,2026-10-08,1,1,Synthetic Test Data

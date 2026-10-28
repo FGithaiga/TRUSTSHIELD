@@ -1,0 +1,13 @@
+URL,URL_Type,ClassLabel
+https://github.com/,homepage,1
+https://github.com/pandas-dev/pandas,repository,1
+https://github.com/pandas-dev/pandas/blob/main/README.md,readme,1
+https://docs.python.org/3/library/,documentation,1
+https://www.python.org/downloads/,downloads,1
+https://getbootstrap.com/docs/,documentation,1
+https://www.php.net/manual/en/,documentation,1
+https://www.kernel.org/,homepage,1
+https://www.wikipedia.org/,homepage,1
+https://www.r-project.org/,homepage,1
+https://www.w3.org/WAI/,documentation,1
+https://pandas.pydata.org/docs/,documentation,1
