@@ -1,81 +1,101 @@
 
+"""Prediction service for TrustShield's saved experimental ML models."""
+
 from pathlib import Path
 
 import joblib
-import pandas as pd
 
-try:
-    from .url_features import extract_url_features
-except ImportError:
-    from url_features import extract_url_features
-
-
-# Resolve the models directory relative to this file.
 MODELS_DIR = Path(__file__).resolve().parents[1] / "models"
 
 _phishing_model = None
+_phishing_vectorizer = None
+_phishing_threshold = None
+
 _jobs_model = None
-_jobs_preprocessor = None
+_jobs_vectorizer = None
+_jobs_threshold = None
+
 _sms_model = None
 _sms_vectorizer = None
+_sms_threshold = None
 
 
 def load_models():
-    """Load saved models once and reuse them."""
-    global _phishing_model, _jobs_model, _jobs_preprocessor
-    global _sms_model, _sms_vectorizer
+    """Load all saved models, vectorizers, and thresholds once."""
+    global _phishing_model, _phishing_vectorizer, _phishing_threshold
+    global _jobs_model, _jobs_vectorizer, _jobs_threshold
+    global _sms_model, _sms_vectorizer, _sms_threshold
 
     if _phishing_model is None:
         _phishing_model = joblib.load(
-            MODELS_DIR / "phishing_model.pkl"
+            MODELS_DIR / "phishing_candidate_model.joblib"
+        )
+        _phishing_vectorizer = joblib.load(
+            MODELS_DIR / "phishing_candidate_vectorizer.joblib"
+        )
+        _phishing_threshold = float(
+            joblib.load(MODELS_DIR / "phishing_candidate_threshold.joblib")
         )
 
     if _jobs_model is None:
         _jobs_model = joblib.load(
-            MODELS_DIR / "fake_job_model.pkl"
+            MODELS_DIR / "fake_job_logistic_regression.joblib"
         )
-
-    if _jobs_preprocessor is None:
-        _jobs_preprocessor = joblib.load(
-            MODELS_DIR / "fake_job_preprocessor.pkl"
+        _jobs_vectorizer = joblib.load(
+            MODELS_DIR / "fake_job_tfidf.joblib"
+        )
+        _jobs_threshold = float(
+            joblib.load(MODELS_DIR / "fake_job_threshold.joblib")
         )
 
     if _sms_model is None:
         _sms_model = joblib.load(
-            MODELS_DIR / "sms_spam_model.pkl"
+            MODELS_DIR / "sms_logistic_regression.joblib"
+        )
+        _sms_vectorizer = joblib.load(
+            MODELS_DIR / "sms_tfidf.joblib"
+        )
+        _sms_threshold = float(
+            joblib.load(MODELS_DIR / "sms_threshold.joblib")
         )
 
-    if _sms_vectorizer is None:
-        _sms_vectorizer = joblib.load(
-            MODELS_DIR / "sms_vectorizer.pkl"
-        )
+
+def _positive_class_probability(model, vectorizer, text, positive_class):
+    """Return probability for a specified class, regardless of class order."""
+    transformed = vectorizer.transform([text])
+    probabilities = model.predict_proba(transformed)[0]
+    class_index = list(model.classes_).index(positive_class)
+    return float(probabilities[class_index])
 
 
 def predict_phishing_url(url: str) -> dict:
-    """Predict whether a URL resembles phishing or legitimate URLs.
+    """Assess whether a URL resembles phishing or legitimate URLs."""
+    if not isinstance(url, str) or not url.strip():
+        raise ValueError("Please enter a URL.")
 
-    URL feature calculations are approximate and have not been
-    validated against the original training feature definitions.
-    Do not use this experimental result as a definitive security verdict.
-    """
     load_models()
+    url = url.strip()
 
-    feature_values = extract_url_features(url)
-    feature_frame = pd.DataFrame([feature_values])
-
-    prediction = int(_phishing_model.predict(feature_frame)[0])
+    # Training labels: 0 = phishing, 1 = legitimate.
+    phishing_probability = _positive_class_probability(
+        _phishing_model,
+        _phishing_vectorizer,
+        url,
+        0,
+    )
+    prediction = 0 if phishing_probability >= _phishing_threshold else 1
 
     return {
         "prediction": prediction,
         "label": (
-            "Phishing URL"
-            if prediction == 0
-            else "Legitimate URL"
+            "Phishing URL" if prediction == 0 else "Legitimate URL"
         ),
+        "phishing_probability": round(phishing_probability, 4),
+        "threshold": _phishing_threshold,
         "validated_for_real_world_use": False,
         "warning": (
-            "Experimental result only. URL feature calculations "
-            "have not been validated against the original dataset."
+            "Experimental URL text model only. This result is not proof "
+            "that a URL is safe or malicious; verify suspicious links independently."
         ),
     }
 
@@ -86,85 +106,50 @@ def predict_sms(message: str) -> dict:
         raise ValueError("Please enter a message.")
 
     load_models()
+    message = message.strip()
 
-    transformed_message = _sms_vectorizer.transform(
-        [message.strip()]
+    # Training labels: 1 = spam, 0 = ham.
+    spam_probability = _positive_class_probability(
+        _sms_model,
+        _sms_vectorizer,
+        message,
+        1,
+    )
+    prediction = (
+        "spam" if spam_probability >= _sms_threshold else "ham"
     )
 
-    prediction = _sms_model.predict(transformed_message)[0]
-
     return {
-        "prediction": str(prediction),
-        "label": str(prediction).upper(),
+        "prediction": prediction,
+        "label": prediction.upper(),
+        "spam_probability": round(spam_probability, 4),
+        "threshold": _sms_threshold,
+        "validated_for_real_world_use": False,
     }
 
 
-def predict_job_posting(job_posting: dict) -> dict:
-    """Classify a job posting using the saved training preprocessor."""
-    if not isinstance(job_posting, dict):
-        raise ValueError(
-            "Job posting must be provided as a dictionary."
-        )
+def predict_job_posting(job_posting) -> dict:
+    """Classify job-advert text using the trained TF-IDF model."""
+    if isinstance(job_posting, dict):
+        text = job_posting.get("combined_text", "")
+    elif isinstance(job_posting, str):
+        text = job_posting
+    else:
+        raise ValueError("Job posting must be text or a dictionary.")
+
+    if not isinstance(text, str) or not text.strip():
+        raise ValueError("Please enter job-advert text.")
 
     load_models()
 
-    # Create a DataFrame from the submitted job posting.
-    input_row = pd.DataFrame([job_posting])
-
-    # Match the exact feature columns and order used during training.
-    expected_columns = list(
-        _jobs_preprocessor.feature_names_in_
+    # Training labels: 1 = fraudulent, 0 = legitimate.
+    fraud_probability = _positive_class_probability(
+        _jobs_model,
+        _jobs_vectorizer,
+        text.strip(),
+        1,
     )
-    input_row = input_row.reindex(columns=expected_columns)
-
-    # Identify columns processed by a text vectorizer.
-    text_columns = set()
-
-    for transformer_name, transformer, columns in (
-        _jobs_preprocessor.transformers_
-    ):
-        if transformer_name == "remainder":
-            continue
-
-        if transformer == "drop" or transformer == "passthrough":
-            continue
-
-        if isinstance(columns, str):
-            columns = [columns]
-
-        # A transformer may itself be a text vectorizer.
-        if hasattr(transformer, "build_analyzer"):
-            text_columns.update(columns)
-
-        # Or it may be a pipeline containing a text vectorizer.
-        elif hasattr(transformer, "steps"):
-            for _, step in transformer.steps:
-                if hasattr(step, "build_analyzer"):
-                    text_columns.update(columns)
-                    break
-
-    # Fill missing text values with empty strings.
-    for column in text_columns:
-        input_row[column] = (
-            input_row[column]
-            .fillna("")
-            .astype(str)
-        )
-
-    # Fill any remaining missing values safely.
-    for column in input_row.columns:
-        if input_row[column].isna().any():
-            if column in text_columns:
-                input_row[column] = input_row[column].fillna("")
-            else:
-                input_row[column] = input_row[column].fillna(0)
-
-    # Apply the original fitted preprocessor and classifier.
-    transformed = _jobs_preprocessor.transform(input_row)
-
-    prediction = int(
-        _jobs_model.predict(transformed)[0]
-    )
+    prediction = 1 if fraud_probability >= _jobs_threshold else 0
 
     return {
         "prediction": prediction,
@@ -173,5 +158,7 @@ def predict_job_posting(job_posting: dict) -> dict:
             if prediction == 1
             else "Likely legitimate job posting"
         ),
+        "fraud_probability": round(fraud_probability, 4),
+        "threshold": _jobs_threshold,
         "validated_for_real_world_use": False,
     }
