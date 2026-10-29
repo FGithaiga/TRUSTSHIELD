@@ -48,7 +48,7 @@ function ReportForm({ onClose, onCreated }) {
           <button type="button" onClick={onClose} className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100" aria-label="Close"><X className="size-5" /></button>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Select label="Channel" value={form.channel} onChange={set('channel')} options={[{ value: 'mpesa', label: 'M-PESA message' }, { value: 'url', label: 'Link' }, { value: 'offer', label: 'Offer' }]} />
+          <Select label="Channel" value={form.channel} onChange={set('channel')} options={[{ value: 'mpesa', label: 'SMS message' }, { value: 'url', label: 'Link' }, { value: 'offer', label: 'Offer' }]} />
           <Input label="County or town" placeholder="Optional" value={form.region} onChange={set('region')} />
         </div>
         <Input className="mt-4" label="Short title" placeholder="e.g. Fake loan approval SMS" value={form.category} onChange={set('category')} />
@@ -96,7 +96,7 @@ export default function ThreatFeed() {
       />
 
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-        <Segmented value={channel} onChange={setChannel} options={[{ value: '', label: 'All' }, { value: 'mpesa', label: 'M-PESA' }, { value: 'url', label: 'Links' }, { value: 'offer', label: 'Offers' }]} />
+        <Segmented value={channel} onChange={setChannel} options={[{ value: '', label: 'All' }, { value: 'mpesa', label: 'SMS' }, { value: 'url', label: 'Links' }, { value: 'offer', label: 'Offers' }]} />
         <p className="flex items-center gap-1.5 text-[13px] text-slate-500">
           <Info className="size-4" /> Entries marked &ldquo;Demo example&rdquo; are illustrative and not verified incidents.
         </p>

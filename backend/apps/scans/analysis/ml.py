@@ -18,18 +18,22 @@ from django.conf import settings
 logger = logging.getLogger("apps.scans.ml")
 
 ARTIFACTS = {
-    "sms_spam": ["sms_spam_model.pkl", "sms_vectorizer.pkl"],
-    "fake_job": ["fake_job_model.pkl", "fake_job_preprocessor.pkl"],
-    "phishing_url": ["phishing_model.pkl"],
+    "sms_spam": [
+        "sms_logistic_regression.joblib",
+        "sms_tfidf.joblib",
+        "sms_threshold.joblib",
+    ],
+    "fake_job": [
+        "fake_job_logistic_regression.joblib",
+        "fake_job_tfidf.joblib",
+        "fake_job_threshold.joblib",
+    ],
+    "phishing_url": [
+        "phishing_candidate_model.joblib",
+        "phishing_candidate_vectorizer.joblib",
+        "phishing_candidate_threshold.joblib",
+    ],
 }
-
-# The fake-job preprocessor was trained with "Unknown" for missing categories.
-# A pasted advert has none of this metadata, so the request is completed with
-# the same placeholder the training data used.
-JOB_CATEGORICAL = [
-    "location", "department", "salary_range", "employment_type",
-    "required_experience", "required_education", "industry", "function",
-]
 
 _lock = threading.Lock()
 _state = {"service": None, "loaded": False, "error": None, "versions": {}, "load_seconds": None}
@@ -104,8 +108,8 @@ def _call(model, fn):
         return None
 
 
-def _result(model, label, flagged, note):
-    return {
+def _result(model, label, flagged, note, probability=None, threshold=None):
+    res = {
         "model": model,
         "version": _state["versions"].get(model, model),
         "label": label,
@@ -113,6 +117,11 @@ def _result(model, label, flagged, note):
         "validated_for_real_world_use": False,
         "note": note,
     }
+    if probability is not None:
+        res["probability"] = probability
+    if threshold is not None:
+        res["threshold"] = threshold
+    return res
 
 
 def classify_sms(text):
@@ -123,6 +132,8 @@ def classify_sms(text):
     return _result(
         "sms_spam", out["label"], flagged,
         "TF-IDF and Logistic Regression trained on a public SMS spam dataset. Spam is related to, but not the same as, fraud.",
+        probability=out.get("spam_probability"),
+        threshold=out.get("threshold"),
     )
 
 
@@ -133,22 +144,18 @@ def classify_url(url):
     return _result(
         "phishing_url", out["label"], out["prediction"] == 0,
         out.get("warning") or "Experimental URL model. Feature calculations have not been validated against the training data.",
+        probability=out.get("phishing_probability"),
+        threshold=out.get("threshold"),
     )
 
 
 def classify_job(text):
-    record = {column: "Unknown" for column in JOB_CATEGORICAL}
-    record.update(
-        telecommuting=int("work from home" in text.lower() or "remote" in text.lower()),
-        has_company_logo=0,
-        has_questions=0,
-        description_length=len(text),
-        combined_text=text,
-    )
-    out = _call("fake_job", lambda s: s.predict_job_posting(record))
+    out = _call("fake_job", lambda s: s.predict_job_posting(text))
     if out is None:
         return None
     return _result(
         "fake_job", out["label"], out["prediction"] == 1,
-        "Logistic Regression trained on structured job adverts. Pasted text lacks company metadata, so this model over-flags and is only used to support rule findings.",
+        "TF-IDF and Logistic Regression trained on job adverts. Pasted text lacks full advert metadata, so this model is used to support rule findings.",
+        probability=out.get("fraud_probability"),
+        threshold=out.get("threshold"),
     )

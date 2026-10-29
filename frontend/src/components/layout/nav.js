@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, Smartphone, Link2, BadgePercent, ListChecks, LifeBuoy, History, Radar, Settings, GraduationCap,
+  LayoutDashboard, Smartphone, Link2, Briefcase, ListChecks, LifeBuoy, History, Radar, Settings, GraduationCap,
 } from 'lucide-react'
 
 export const NAV = [
@@ -7,9 +7,9 @@ export const NAV = [
   {
     section: 'Checkers',
     items: [
-      { to: '/app/mpesa', label: 'M-PESA Checker', icon: Smartphone, keywords: 'sms message reversal pin' },
+      { to: '/app/mpesa', label: 'SMS Checker', icon: Smartphone, keywords: 'sms message reversal pin' },
       { to: '/app/links', label: 'Link Checker', icon: Link2, keywords: 'url website domain phishing' },
-      { to: '/app/offers', label: 'Offer Checker', icon: BadgePercent, keywords: 'job investment shopping deal' },
+      { to: '/app/offers', label: 'Job Checker', icon: Briefcase, keywords: 'job advert vacancy recruitment' },
     ],
   },
   {

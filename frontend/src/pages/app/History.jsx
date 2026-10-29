@@ -69,7 +69,7 @@ export default function History() {
             value={type}
             onChange={(e) => (setType(e.target.value), setPage(1))}
             className="lg:w-48 [&_select]:h-11"
-            options={[{ value: '', label: 'All types' }, { value: 'mpesa', label: 'M-PESA' }, { value: 'url', label: 'Links' }, { value: 'offer', label: 'Offers' }]}
+            options={[{ value: '', label: 'All types' }, { value: 'mpesa', label: 'SMS' }, { value: 'url', label: 'Links' }, { value: 'offer', label: 'Offers' }]}
           />
           <Segmented
             value={risk}

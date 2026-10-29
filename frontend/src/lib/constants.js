@@ -1,4 +1,4 @@
-import { AlertTriangle, ShieldAlert, ShieldCheck, Smartphone, Link2, BadgePercent } from 'lucide-react'
+import { AlertTriangle, ShieldAlert, ShieldCheck, Smartphone, Link2, Briefcase } from 'lucide-react'
 
 export const RISK = {
   high: {
@@ -40,16 +40,13 @@ export const RISK = {
 }
 
 export const SCAN_TYPES = {
-  mpesa: { key: 'mpesa', label: 'M-PESA message', short: 'M-PESA', icon: Smartphone, path: '/app/mpesa' },
+  mpesa: { key: 'mpesa', label: 'SMS message', short: 'SMS', icon: Smartphone, path: '/app/mpesa' },
   url: { key: 'url', label: 'Link', short: 'Link', icon: Link2, path: '/app/links' },
-  offer: { key: 'offer', label: 'Offer', short: 'Offer', icon: BadgePercent, path: '/app/offers' },
+  offer: { key: 'offer', label: 'Job advert', short: 'Job', icon: Briefcase, path: '/app/offers' },
 }
 
 export const OFFER_TYPES = [
-  { value: 'job', label: 'Job offer' },
-  { value: 'shopping', label: 'Online shopping deal' },
-  { value: 'investment', label: 'Investment or loan' },
-  { value: 'other', label: 'Other offer' },
+  { value: 'job', label: 'Job advert' },
 ]
 
 /* Fictional sample scenarios. None of these numbers or links are real. */
@@ -70,6 +67,11 @@ export const MPESA_SAMPLES = [
     text: 'CONGRATULATIONS! You have won Ksh 50,000 in the Safaricom Shangwe promotion. To claim your reward, pay a processing fee of Ksh 1,200 to till 000000 then visit http://safaricom-rewards-update.com/claim/now',
   },
   {
+    id: 'promo',
+    label: 'Promotional SMS scam',
+    text: 'You have been selected for a Ksh 10,000 weekly reward. Dial *123*100# to claim now. Limited time offer!',
+  },
+  {
     id: 'genuine',
     label: 'Ordinary payment',
     text: 'Hi Wanjiru, I have just paid the Ksh 1,500 for the books. Let me know when they arrive. Thanks!',
@@ -83,29 +85,37 @@ export const URL_SAMPLES = [
   { id: 'official', label: 'Official domain', text: 'https://www.safaricom.co.ke/personal/m-pesa' },
 ]
 
-export const OFFER_SAMPLES = [
+export const JOB_SAMPLES = [
   {
     id: 'job-fee',
     offer_type: 'job',
     label: 'Job with fee',
-    text: 'URGENT HIRING: Data entry clerks needed, work from home. Earn Ksh 3,000 per day, no experience or interview required. Pay a registration fee of Ksh 500 to secure your slot. Contact HR on WhatsApp only.',
+    title: 'Data entry clerk',
+    company: 'Fast Track Logistics Ke',
+    description: 'Work from home data entry. Earn Ksh 3,000 per day. Flexible shifts, no prior experience needed.',
+    requirements: 'Must have a smartphone. Send Ksh 500 registration and interview booking fee via M-PESA to 0712 000 111 to secure your slot.',
+    text: 'Job title: Data entry clerk\nCompany profile: Fast Track Logistics Ke\nJob description: Work from home data entry. Earn Ksh 3,000 per day. Flexible shifts, no prior experience needed.\nRequirements: Must have a smartphone. Send Ksh 500 registration and interview booking fee via M-PESA to 0712 000 111 to secure your slot.',
   },
   {
-    id: 'invest',
-    offer_type: 'investment',
-    label: 'Investment promise',
-    text: 'Double your money in 7 days! Invest from Ksh 1,000 and receive guaranteed returns of 100%. Limited slots, offer ends tonight. Send to the agent number to join.',
-  },
-  {
-    id: 'shop',
-    offer_type: 'shopping',
-    label: 'Too-cheap phone',
-    text: 'Brand new iPhone for only Ksh 9,999. Pay full amount first via M-PESA and we deliver in 2 hours. Stock is limited, pay now to reserve.',
+    id: 'whatsapp-job',
+    offer_type: 'job',
+    label: 'WhatsApp recruiter',
+    title: 'Customer support representative',
+    company: 'Apex Remote Services',
+    description: 'Urgent hiring for customer care agents. High commission plus Ksh 45,000 basic pay.',
+    requirements: 'Do not call. WhatsApp HR on 0722 000 111 only. Processing fee of Ksh 1,200 required for onboarding kit.',
+    text: 'Job title: Customer support representative\nCompany profile: Apex Remote Services\nJob description: Urgent hiring for customer care agents. High commission plus Ksh 45,000 basic pay.\nRequirements: Do not call. WhatsApp HR on 0722 000 111 only. Processing fee of Ksh 1,200 required for onboarding kit.',
   },
   {
     id: 'legit-job',
     offer_type: 'job',
     label: 'Standard vacancy',
-    text: 'We are hiring an Accounts Assistant at our Nairobi office. Applicants should hold a CPA qualification. Shortlisted candidates will be invited for an interview. Apply through our careers page by 30 November.',
+    title: 'Accounts Assistant',
+    company: 'Nairobi Commercial Enterprise',
+    description: 'We are hiring an Accounts Assistant at our Nairobi office. Responsible for ledger reconciliation, bank statements, and invoicing.',
+    requirements: 'Hold a CPA Part II or equivalent business degree. Shortlisted candidates will be invited for an interview. Apply through our careers page by 30 November.',
+    text: 'Job title: Accounts Assistant\nCompany profile: Nairobi Commercial Enterprise\nJob description: We are hiring an Accounts Assistant at our Nairobi office. Responsible for ledger reconciliation, bank statements, and invoicing.\nRequirements: Hold a CPA Part II or equivalent business degree. Shortlisted candidates will be invited for an interview. Apply through our careers page by 30 November.',
   },
 ]
+
+export const OFFER_SAMPLES = JOB_SAMPLES

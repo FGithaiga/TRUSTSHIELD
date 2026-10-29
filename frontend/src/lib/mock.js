@@ -62,7 +62,7 @@ function seed() {
     offer: ['Advance-fee job offer', 'Unrealistic investment return', 'Prepayment shopping scam'],
   }
   const previews = {
-    mpesa: ['M-PESA message, 162 characters', 'M-PESA message, 118 characters', 'M-PESA message, 204 characters'],
+    mpesa: ['SMS message, 162 characters', 'SMS message, 118 characters', 'SMS message, 204 characters'],
     url: ['safaricom-bonus-ke.xyz', 'bit.ly', 'mpesa-verify.online', 'www.safaricom.co.ke', '197.0.0.12'],
     offer: ['Job offer, 241 characters', 'Investment offer, 133 characters', 'Shopping offer, 98 characters'],
   }
@@ -198,7 +198,7 @@ function analyzeUrl(raw) {
 
 function analyzeMpesa(text) {
   const findings = []
-  rule(findings, text, { code: 'pin_request', re: /\b(pin|otp|one[- ]time (?:password|code)|password|secret code)\b/i, severity: 'high', title: 'Asks for your PIN, OTP or password', detail: 'Safaricom and banks never ask for your M-PESA PIN or one-time code by SMS or phone call.' })
+  rule(findings, text, { code: 'pin_request', re: /\b(pin|otp|one[- ]time (?:password|code)|password|secret code)\b/i, severity: 'high', title: 'Asks for your PIN, OTP or password', detail: 'Safaricom and banks never ask for your mobile money PIN or one-time code by SMS or phone call.' })
   rule(findings, text, { code: 'reversal_request', re: /(revers\w*|by mistake|wrongly sent|kimakosa|rudisha|send (?:it )?back)/i, severity: 'high', title: 'Asks you to reverse or return a payment', detail: 'Genuine wrong transfers are reversed by the sender through Safaricom. Check your actual M-PESA balance before sending anything back.' })
   rule(findings, text, { code: 'fee_to_claim', re: /((?:processing|clearance|registration|activation) fee|pay (?:a )?fee|to claim)/i, severity: 'high', title: 'Requests a fee to release money or a prize', detail: 'Paying to receive a prize or refund is a common advance-fee pattern.' })
   rule(findings, text, { code: 'prize_claim', re: /(you have won|umeshinda|winner|congratulations|zawadi|promotion|bonus points?)/i, severity: 'medium', title: 'Claims you have won a prize or bonus', detail: 'Unexpected prize messages are frequently used to start a scam.' })
@@ -331,7 +331,7 @@ function assemble(scanType, content, offerType, analysis) {
 
 function previewFor(scanType, content, offerType, urlDetails) {
   if (scanType === 'url') return urlDetails?.hostname ?? 'Link'
-  const label = scanType === 'mpesa' ? 'M-PESA message' : `${offerType ? offerType[0].toUpperCase() + offerType.slice(1) : 'Other'} offer`
+  const label = scanType === 'mpesa' ? 'SMS message' : `${offerType ? offerType[0].toUpperCase() + offerType.slice(1) : 'Other'} offer`
   return `${label}, ${content.length} characters`
 }
 

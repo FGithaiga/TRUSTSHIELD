@@ -16,7 +16,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useRevealOnScroll } from '@/components/ui/Motion'
 
 const FEATURES = [
-  { icon: Smartphone, title: 'M-PESA Scam Checker', text: 'Fake reversals, PIN requests, prize scams and risky payment requests.', primary: true },
+  { icon: Smartphone, title: 'SMS Scam Checker', text: 'Fake reversals, PIN requests, prize scams and risky payment requests.', primary: true },
   { icon: Link2, title: 'Link Checker', text: 'Spots look-alike and risky links without opening them.' },
   { icon: BadgePercent, title: 'Offer Checker', text: 'Fake jobs, shopping deals and investment promises.' },
   { icon: ListChecks, title: 'Before You Pay', text: 'A quick checklist before any payment.' },
@@ -31,7 +31,7 @@ const STEPS = [
 ]
 
 const DIFFERENT = [
-  { icon: ScanText, title: 'M-PESA message anatomy', text: 'Checks a "Confirmed" message against the real M-PESA format.' },
+  { icon: ScanText, title: 'SMS message anatomy', text: 'Checks a "Confirmed" message against the real mobile money format.' },
   { icon: UsersRound, title: 'Seen before', text: 'Warns you when others flagged the same number or link.' },
   { icon: HeartHandshake, title: 'Ask someone you trust', text: 'Share a safe summary with family on WhatsApp.' },
   { icon: GraduationCap, title: 'Scam Sense Trainer', text: 'Sharpen your instincts in one minute a day.' },
@@ -92,7 +92,7 @@ function PhoneMock() {
 
       <div className="absolute top-10 -right-2 hidden w-[200px] animate-fade-up rounded-2xl border border-line bg-surface p-3.5 shadow-[0_24px_48px_-16px_rgb(0_0_0/0.45)] [animation-delay:600ms] sm:block lg:-right-10">
         <p className="text-[11px] font-semibold tracking-wide text-slate-500 uppercase">Next step</p>
-        <p className="mt-1 text-[13px] leading-snug font-semibold text-fg">Check your M-PESA balance directly. Do not send money back.</p>
+        <p className="mt-1 text-[13px] leading-snug font-semibold text-fg">Check your mobile money balance directly. Do not send money back.</p>
       </div>
     </div>
   )
@@ -169,7 +169,7 @@ export default function Landing() {
               Verify before<br /><span className="text-mint-300">you pay.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist-300">
-              Paste a suspicious M-PESA message, link or offer. See the warning signs and your safest next step in seconds.
+              Paste a suspicious SMS message, link or offer. See the warning signs and your safest next step in seconds.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button as={Link} to={authed ? '/app/mpesa' : '/register'} size="lg" iconRight={ArrowRight}>Check a message</Button>

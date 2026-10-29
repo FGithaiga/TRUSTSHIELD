@@ -133,7 +133,7 @@ export default function Settings() {
             />
             <div className="flex items-start gap-3 rounded-xl bg-canvas p-4 text-sm text-slate-600">
               <ShieldCheck className="mt-0.5 size-5 shrink-0 text-brand-ink" />
-              TrustShield 254 never asks for camera, contacts, location or SMS inbox access, and never asks for your M-PESA PIN, password or OTP.
+              TrustShield 254 never asks for camera, contacts, location or SMS inbox access, and never asks for your mobile money PIN, password or OTP.
             </div>
           </div>
         </Section>

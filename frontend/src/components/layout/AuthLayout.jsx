@@ -5,7 +5,7 @@ import { Logo } from '@/components/brand/Logo'
 import { KenyaFlag, Skyline } from '@/components/brand/Art'
 
 const FEATURES = [
-  { icon: Smartphone, title: 'M-PESA Checker', text: 'Fake reversals and PIN requests' },
+  { icon: Smartphone, title: 'SMS Checker', text: 'Fake reversals and PIN requests' },
   { icon: Link2, title: 'Link Checker', text: 'Look-alike and risky links' },
   { icon: BadgePercent, title: 'Offer Checker', text: 'Fake jobs and deals' },
   { icon: Wallet, title: 'Before You Pay', text: 'A quick payment checklist' },

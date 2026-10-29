@@ -4,7 +4,10 @@ from django.conf import settings
 
 from apps.scans.analysis import engine, ml
 
-pytestmark = pytest.mark.skipif(not (settings.ML_MODELS_DIR / "sms_spam_model.pkl").exists(), reason="ML artifacts not available")
+pytestmark = pytest.mark.skipif(
+    not (settings.ML_MODELS_DIR / "sms_logistic_regression.joblib").exists(),
+    reason="ML artifacts not available",
+)
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -37,7 +40,6 @@ def test_phishing_model_not_counted_for_official_domain():
 
 
 def test_fake_job_model_runs_on_pasted_text():
-    # model_service.predict_job_posting fails on missing categorical fields; the adapter must supply them.
     result = ml.classify_job("We are hiring an accountant in Nairobi. Apply on our careers page.")
     assert result is not None and result["model"] == "fake_job"
 

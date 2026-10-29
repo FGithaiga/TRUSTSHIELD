@@ -16,9 +16,9 @@ import { tipOfTheDay } from '@/data/tips'
 import { cx, timeAgo } from '@/lib/format'
 
 const QUICK = [
-  { type: 'mpesa', title: 'Check an M-PESA message', text: 'Fake reversals, PIN requests, prize claims.' },
+  { type: 'mpesa', title: 'Check an SMS message', text: 'Fake reversals, PIN requests, prize claims.' },
   { type: 'url', title: 'Inspect a link', text: 'Look-alike domains and risky link structure.' },
-  { type: 'offer', title: 'Assess an offer', text: 'Job fees, investment promises, prepay deals.' },
+  { type: 'offer', title: 'Check a job advert', text: 'Advance fees, interview charges, fake vacancies.' },
 ]
 
 function greeting() {

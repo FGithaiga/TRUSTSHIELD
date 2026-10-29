@@ -1,14 +1,14 @@
 import { CircleCheck, CircleX, ScanText } from 'lucide-react'
 import { cx } from '@/lib/format'
 
-/** Compares a pasted confirmation with the usual layout of genuine M-PESA messages. */
+/** Compares a pasted confirmation with the usual layout of genuine SMS messages. */
 export function Anatomy({ anatomy }) {
   const all = anatomy.passed === anatomy.total
   return (
     <div className="card overflow-hidden">
       <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
         <h3 className="flex items-center gap-2 font-bold text-fg">
-          <ScanText className="size-[18px] text-brand-ink" /> M-PESA message anatomy
+          <ScanText className="size-[18px] text-brand-ink" /> SMS message anatomy
         </h3>
         <span className={cx('rounded-full px-2.5 py-0.5 text-xs font-bold', all ? 'bg-risk-clear-bg text-risk-clear-fg' : 'bg-risk-high-bg text-risk-high-fg')}>
           {anatomy.passed} of {anatomy.total} match

@@ -52,7 +52,38 @@ function SummaryColumns({ result }) {
     </Column>
   )
 
-  const second = d ? (
+  const modelColumn = (
+    <Column icon={Cpu} title="Model signal">
+      {result.model_result ? (
+        <>
+          <div className="flex items-center gap-2">
+            <p className="text-[15px] font-semibold text-fg">{result.model_result.label}</p>
+            {result.model_result.flagged ? (
+              <span className="inline-flex rounded-full bg-risk-high-bg px-2 py-0.5 text-[11px] font-bold text-risk-high-fg">Flagged</span>
+            ) : (
+              <span className="inline-flex rounded-full bg-risk-clear-bg px-2 py-0.5 text-[11px] font-bold text-risk-clear-fg">Clear</span>
+            )}
+          </div>
+          {result.model_result.probability != null && (
+            <p className="mt-1 text-[13px] font-medium text-slate-700">
+              Confidence: {(result.model_result.probability * 100).toFixed(1)}%
+              {result.model_result.threshold != null && (
+                <span className="text-slate-400 font-normal"> (threshold: {(result.model_result.threshold * 100).toFixed(0)}%)</span>
+              )}
+            </p>
+          )}
+          {result.model_result.flagged && !modelCounted && (
+            <span className="mt-1.5 inline-flex rounded-md bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">Not counted: no supporting rule findings</span>
+          )}
+          <p className="mt-1.5 text-[12.5px] leading-snug text-slate-500">{result.model_result.note ?? 'Experimental classifier.'}</p>
+        </>
+      ) : (
+        <p className="text-[13px] text-slate-500">No trained model output available.</p>
+      )}
+    </Column>
+  )
+
+  const third = d ? (
     <Column
       icon={d.is_official_domain ? CheckCircle2 : XCircle}
       iconClass={d.is_official_domain ? 'text-risk-clear-fg' : 'text-risk-high-fg'}
@@ -64,17 +95,18 @@ function SummaryColumns({ result }) {
       </p>
     </Column>
   ) : (
-    <Column icon={Cpu} title="Model signal">
-      {result.model_result ? (
-        <>
-          <p className="text-[15px] font-semibold text-fg">{result.model_result.label}</p>
-          {result.model_result.flagged && !modelCounted && (
-            <span className="mt-1.5 inline-flex rounded-md bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">Not counted: no supporting rule findings</span>
-          )}
-          <p className="mt-2 text-[13px] leading-snug text-slate-500">{result.model_result.note ?? 'Experimental classifier. Not validated for real-world use.'}</p>
-        </>
+    <Column icon={LayoutGrid} iconClass={risk.text} title="Common patterns">
+      {patterns.length ? (
+        <ul className="space-y-1.5">
+          {patterns.map((f) => (
+            <li key={f.code} className="flex gap-2 text-[13.5px] leading-snug text-slate-700">
+              <span className={cx('mt-[7px] size-1.5 shrink-0 rounded-full', SEVERITY[f.severity].dot)} />
+              {f.title}
+            </li>
+          ))}
+        </ul>
       ) : (
-        <p className="text-[13px] text-slate-500">No trained model covers this offer type yet. Result is based on rule checks.</p>
+        <p className="text-[13.5px] text-slate-500">No known scam patterns matched.</p>
       )}
     </Column>
   )
@@ -82,21 +114,8 @@ function SummaryColumns({ result }) {
   return (
     <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4 [&>*]:bg-surface">
       {first}
-      {second}
-      <Column icon={LayoutGrid} iconClass={risk.text} title="Common patterns">
-        {patterns.length ? (
-          <ul className="space-y-1.5">
-            {patterns.map((f) => (
-              <li key={f.code} className="flex gap-2 text-[13.5px] leading-snug text-slate-700">
-                <span className={cx('mt-[7px] size-1.5 shrink-0 rounded-full', SEVERITY[f.severity].dot)} />
-                {f.title}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-[13.5px] text-slate-500">No known scam patterns matched.</p>
-        )}
-      </Column>
+      {modelColumn}
+      {third}
       <Column icon={ShieldAlert} iconClass={risk.text} title="Recommendation">
         <p className="text-[15px] font-semibold text-fg">
           {{ high: 'Do not pay or interact.', caution: 'Verify before acting.', clear: 'Proceed with normal care.' }[result.risk_level]}

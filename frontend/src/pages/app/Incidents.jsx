@@ -9,7 +9,7 @@ import { cx, formatDateTime } from '@/lib/format'
 import { useToast } from '@/context/ToastContext'
 
 const TYPES = [
-  { id: 'sent_money', icon: Smartphone, title: 'I sent money to a scammer', text: 'Paid via M-PESA, till or paybill' },
+  { id: 'sent_money', icon: Smartphone, title: 'I sent money to a scammer', text: 'Paid via mobile money, till or paybill' },
   { id: 'shared_pin', icon: KeyRound, title: 'I shared my PIN or OTP', text: 'Or a password or ID details' },
   { id: 'clicked_link', icon: Link2, title: 'I opened a suspicious link', text: 'And may have entered details' },
   { id: 'job_fee', icon: BriefcaseBusiness, title: 'I paid a job or training fee', text: 'To a recruiter or agent' },
@@ -19,8 +19,8 @@ const TYPES = [
 
 const URGENT = {
   sent_money: ['Call Safaricom Customer Care immediately and give them the transaction code.', 'Do not send more money to recover the first payment.'],
-  shared_pin: ['Change your M-PESA PIN now by dialling *334#.', 'Call Safaricom Customer Care to secure your line and account.'],
-  clicked_link: ['Change any password you entered on that page.', 'Watch your M-PESA and bank accounts for unfamiliar activity.'],
+  shared_pin: ['Change your mobile money PIN now by dialling *334#.', 'Call Safaricom Customer Care to secure your line and account.'],
+  clicked_link: ['Change any password you entered on that page.', 'Watch your mobile money and bank accounts for unfamiliar activity.'],
   job_fee: ['Stop all further payments and communication with the recruiter.', 'Keep the advert, chats and payment confirmation as evidence.'],
   shopping: ['Keep the listing, chat and payment confirmation.', 'Report the seller account on the platform where you found it.'],
   other: ['Stop communicating with the other party.', 'Keep screenshots and messages as evidence.'],
@@ -216,8 +216,8 @@ export default function Incidents() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Input label="When did it happen?" type="datetime-local" value={form.occurred_at} onChange={set('occurred_at')} max={new Date().toISOString().slice(0, 16)} />
                     <Input label="Amount lost (Ksh)" type="number" min="0" inputMode="numeric" placeholder="0" value={form.amount} onChange={set('amount')} />
-                    <Select label="How did you pay?" value={form.channel} onChange={set('channel')} options={[{ value: 'mpesa', label: 'M-PESA send money' }, { value: 'till', label: 'Till or paybill' }, { value: 'bank', label: 'Bank transfer' }, { value: 'card', label: 'Card' }, { value: 'none', label: 'No payment made' }]} />
-                    <Input label="M-PESA transaction code" placeholder="e.g. TJK4XXXXXX" value={form.transaction_code} onChange={(e) => set('transaction_code')(e.target.value.toUpperCase())} hint="Found in the confirmation SMS" />
+                    <Select label="How did you pay?" value={form.channel} onChange={set('channel')} options={[{ value: 'mpesa', label: 'Mobile money send money' }, { value: 'till', label: 'Till or paybill' }, { value: 'bank', label: 'Bank transfer' }, { value: 'card', label: 'Card' }, { value: 'none', label: 'No payment made' }]} />
+                    <Input label="Transaction code" placeholder="e.g. TJK4XXXXXX" value={form.transaction_code} onChange={(e) => set('transaction_code')(e.target.value.toUpperCase())} hint="Found in the confirmation SMS" />
                   </div>
                   <Input label="Scammer's phone number, account or link" placeholder="Number, username or website" value={form.suspect_contact} onChange={set('suspect_contact')} />
                   <Textarea label="What happened?" placeholder="Describe the events in order: how they contacted you, what they asked for and what you did." value={form.description} onChange={set('description')} error={errors.description} maxLength={2000} rows={5} />
