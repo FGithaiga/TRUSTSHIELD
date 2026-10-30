@@ -43,14 +43,14 @@ services:
     autoDeploy: true
 
   # ------------------------------------------------------------
-  # FRONTEND: React/Vite static site
+  # FRONTEND: React/Vite static site (served as a web service)
   # ------------------------------------------------------------
-  - type: static
+  - type: web
     name: trustshield-frontend
     env: node
     root_dir: frontend
     buildCommand: "./build.sh"
-    staticPublishPath: dist
+    startCommand: "npx serve -s dist -l $PORT"
     envVars:
       - key: VITE_USE_MOCK
         value: "false"
