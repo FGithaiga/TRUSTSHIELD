@@ -16,9 +16,10 @@ __pycache__/
 
 # Model files and generated artifacts
 *.pkl
-*.joblib
 *.h5
 *.keras
+# Keep AI-ML model artifacts (joblib) for deployment
+!AI-ML/models/*.joblib
 
 # Test and tool caches
 .pytest_cache/

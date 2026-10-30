@@ -205,7 +205,7 @@ function analyzeMpesa(text) {
   rule(findings, text, { code: 'urgency', re: /(urgent\w*|immediately|within \d+ (?:minutes?|hours?)|haraka|sasa hivi|tonight|suspended|blocked)/i, severity: 'medium', title: 'Creates urgency or threatens your account', detail: 'Pressure to act quickly is used to stop you from checking the facts.' })
   rule(findings, text, { code: 'payment_instruction', re: /((?:send|tuma|pay|lipa)\b[^.]{0,40}?(?:ksh|kes|till|paybill|\d{3,}))/i, severity: 'medium', title: 'Contains a payment instruction', detail: 'Verify the recipient independently before sending money.' })
   rule(findings, text, { code: 'phone_number', re: PHONE_RE, severity: 'low', title: 'Includes a phone number to contact or pay', detail: 'Scammers often ask you to call or pay a personal number instead of an official channel.' })
-  rule(findings, text, { code: 'confirmation_claim', re: /\b(confirmed\.|you have received)/i, severity: 'low', title: 'Looks like an M-PESA confirmation', detail: 'Message text cannot prove a payment arrived. Check your M-PESA balance or statement directly.' })
+  rule(findings, text, { code: 'confirmation_claim', re: /\b(confirmed\.|you have received)/i, severity: 'low', title: 'Looks like an SMS confirmation', detail: 'Message text cannot prove a payment arrived. Check your mobile money balance or statement directly.' })
 
   const link = text.match(URL_RE)?.[0]
   let url_details = null
@@ -261,13 +261,13 @@ const CATEGORY_BY_CODE = [
 const ACTIONS = {
   high: [
     'Do not send money, share your PIN or open any link in this message.',
-    'Check your M-PESA balance directly on your phone. Do not rely on the message text.',
+    'Check your mobile money balance directly on your phone. Do not rely on the message text.',
     'Forward suspicious SMS messages to 333 to report them to Safaricom.',
     'If you have already paid or shared details, use the Incident Assistant now.',
   ],
   caution: [
     'Pause before acting. Contact the person or company through a channel you already trust.',
-    'Confirm any payment by checking your own M-PESA statement.',
+    'Confirm any payment by checking your own mobile money statement.',
     'Do not share your PIN, OTP or ID details in response to this message.',
   ],
   clear: [

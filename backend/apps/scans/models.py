@@ -6,7 +6,7 @@ from django.db import models
 
 class Scan(models.Model):
     class ScanType(models.TextChoices):
-        MPESA = "mpesa", "M-PESA message"
+        MPESA = "mpesa", "SMS message"
         URL = "url", "Link"
         OFFER = "offer", "Offer"
 

@@ -33,13 +33,13 @@ NO_CATEGORY = "No category"
 ACTIONS = {
     "high": [
         "Do not send money, share your PIN or open any link in this message.",
-        "Check your M-PESA balance directly on your phone. Do not rely on the message text.",
+        "Check your mobile money balance directly on your phone. Do not rely on the message text.",
         "Forward suspicious SMS messages to 333 to report them to Safaricom.",
         "If you have already paid or shared details, use the Incident Assistant now.",
     ],
     "caution": [
         "Pause before acting. Contact the person or company through a channel you already trust.",
-        "Confirm any payment by checking your own M-PESA statement.",
+        "Confirm any payment by checking your own mobile money statement.",
         "Do not share your PIN, OTP or ID details in response to this message.",
     ],
     "clear": [
@@ -179,7 +179,7 @@ def preview_for(scan_type, content, offer_type, url_details):
     if scan_type == "url":
         return url_details["hostname"] if url_details else "Link"
     if scan_type == "mpesa":
-        return f"M-PESA message, {len(content)} characters"
+        return f"SMS message, {len(content)} characters"
     return f"{(offer_type or 'other').capitalize()} offer, {len(content)} characters"
 
 

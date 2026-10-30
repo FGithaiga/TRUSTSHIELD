@@ -6,6 +6,12 @@ python-dotenv==1.2.4
 argon2-cffi==25.1.0
 requests==2.34.2
 
+# Production
+gunicorn
+whitenoise==6.8.1
+psycopg2-binary==2.9.10
+dj-database-url==2.3.0
+
 # ML runtime. Pinned to the versions the AI-ML artifacts were saved with;
 # loading pickles with different versions can fail or change predictions.
 joblib==1.6.0
@@ -17,4 +23,3 @@ scipy==1.18.1
 # Testing
 pytest==9.1.1
 pytest-django==4.14.0
-gunicorn

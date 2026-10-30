@@ -1,0 +1,70 @@
+# Render deployment configuration for TrustShield 254
+# Monorepo: Backend (Django) + Frontend (React/Vite) + Managed PostgreSQL
+#
+# DEPLOYMENT ORDER:
+# 1. Deploy this render.yaml (creates backend + database + frontend placeholders)
+# 2. Note the backend URL from Render dashboard (e.g. https://trustshield-backend.onrender.com)
+# 3. Update backend env var CORS_ALLOWED_ORIGINS with your frontend URL
+# 4. Update frontend env var VITE_API_BASE_URL with your backend URL
+# 5. Redeploy both services
+
+services:
+  # ------------------------------------------------------------
+  # BACKEND: Django API + ML models
+  # ------------------------------------------------------------
+  - type: web
+    name: trustshield-backend
+    env: python
+    root_dir: backend
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "*.onrender.com,localhost,127.0.0.1"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://trustshield-frontend.onrender.com"
+      - key: CORS_ALLOWED_ORIGIN_REGEXES
+        value: "https://.*\\.onrender\\.com"
+      - key: ML_PRELOAD
+        value: "true"
+      - key: ML_ENABLED
+        value: "true"
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: trustshield-db
+          property: connectionString
+    healthCheckPath: /api/health/
+    autoDeploy: true
+
+  # ------------------------------------------------------------
+  # FRONTEND: React/Vite static site
+  # ------------------------------------------------------------
+  - type: static
+    name: trustshield-frontend
+    env: node
+    root_dir: frontend
+    buildCommand: "./build.sh"
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_USE_MOCK
+        value: "false"
+      - key: VITE_API_BASE_URL
+        value: "https://trustshield-backend.onrender.com/api"
+      - key: VITE_API_PROXY_TARGET
+        value: "https://trustshield-backend.onrender.com"
+    autoDeploy: true
+
+# ------------------------------------------------------------
+# DATABASE: Managed PostgreSQL
+# ------------------------------------------------------------
+databases:
+  - name: trustshield-db
+    databaseName: trustshield
+    user: trustshield
+    plan: free

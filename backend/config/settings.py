@@ -24,12 +24,21 @@ if not SECRET_KEY:
 
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
 
+# Automatically accept Render's external URL (set by Render at runtime)
+_render_external = os.environ.get("RENDER_EXTERNAL_URL", "")
+if _render_external:
+    from urllib.parse import urlparse
+    _host = urlparse(_render_external).hostname
+    if _host and _host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_host)
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
@@ -47,6 +56,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -73,11 +83,14 @@ TEMPLATES = [
     },
 ]
 
+import dj_database_url
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.environ.get("DATABASE_PATH") or BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 AUTH_USER_MODEL = "accounts.User"
@@ -132,6 +145,10 @@ if DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"].append("rest_framework.renderers.BrowsableAPIRenderer")
 
 CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", "http://127.0.0.1:5173,http://localhost:5173")
+CORS_ALLOWED_ORIGIN_REGEXES = env_list(
+    "CORS_ALLOWED_ORIGIN_REGEXES",
+    r"^https://.*\.onrender\.com$",
+)
 CORS_URLS_REGEX = r"^/api/.*$"
 
 # --- Security (tightened automatically outside DEBUG) ------------------------
@@ -148,7 +165,7 @@ if not DEBUG:
 # The AI-ML module lives outside the Django project and is imported, not copied.
 ML_SRC_DIR = Path(os.environ.get("ML_SRC_DIR") or PROJECT_ROOT / "AI-ML" / "src")
 ML_MODELS_DIR = Path(os.environ.get("ML_MODELS_DIR") or PROJECT_ROOT / "AI-ML" / "models")
-ML_PRELOAD = env_bool("ML_PRELOAD", False)
+ML_PRELOAD = env_bool("ML_PRELOAD", True)
 ML_ENABLED = env_bool("ML_ENABLED", True)
 
 LLM_API_BASE = os.environ.get("LLM_API_BASE", "").rstrip("/")
@@ -178,6 +195,12 @@ EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "TrustShield 254 <no-reply@trustshield254.ke>")
 # Where links in emails point (the React app)
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://127.0.0.1:5173").rstrip("/")
+
+# --- Static files (WhiteNoise for production) --------------------------------
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+WHITENOISE_MAX_AGE = 31536000  # 1 year cache for static assets
 
 LOGGING = {
     "version": 1,

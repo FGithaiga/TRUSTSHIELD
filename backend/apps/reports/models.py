@@ -4,7 +4,7 @@ from django.db import models
 
 class CommunityReport(models.Model):
     class Channel(models.TextChoices):
-        MPESA = "mpesa", "M-PESA message"
+        MPESA = "mpesa", "SMS message"
         URL = "url", "Link"
         OFFER = "offer", "Offer"
 
