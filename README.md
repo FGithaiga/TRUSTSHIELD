@@ -11,6 +11,7 @@
 </div>
 
 ---
+
 ## 📌 PROJECT OVERVIEW
 TrustShield 254 is an AI-powered cybersecurity and digital-trust project
 designed to help Kenyan users identify potentially suspicious online
@@ -47,6 +48,7 @@ Current Prototype Capabilities
 The integration and end-to-end testing of the complete application are
 ongoing. Model outputs should be treated as decision-support signals,
 not as definitive proof that content is safe or fraudulent.
+
 ❗ PROBLEM STATEMENT
 The growth of digital commerce, online recruitment, and mobile financial
 services has created more opportunities for cybercriminals to exploit
