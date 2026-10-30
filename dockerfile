@@ -17,9 +17,11 @@ RUN python -m pip install --no-cache-dir \
 
 COPY . /app
 
-# Allow PrimeCloud's runtime user to collect Django static files.
+# Create staticfiles and make it writable by ANY user (root or non-root).
+# Use chmod 777 (not a+rwX) so that group/other can also write,
+# regardless of the UID PrimeCloud runs the container as.
 RUN mkdir -p /app/backend/staticfiles \
-    && chmod -R a+rwX /app/backend/staticfiles
+    && chmod -R 777 /app/backend/staticfiles
 
 WORKDIR /app/backend
 
