@@ -17,6 +17,10 @@ RUN python -m pip install --no-cache-dir \
 
 COPY . /app
 
+# Allow PrimeCloud's runtime user to collect Django static files.
+RUN mkdir -p /app/backend/staticfiles \
+    && chmod -R a+rwX /app/backend/staticfiles
+
 WORKDIR /app/backend
 
 EXPOSE 8000
