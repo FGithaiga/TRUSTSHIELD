@@ -196,7 +196,8 @@ FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://127.0.0.1:5173").rstrip("/
 
 # --- Static files (WhiteNoise for production) --------------------------------
 STATIC_URL = "static/"
-STATIC_ROOT = Path(os.environ.get("STATIC_ROOT") or "/tmp/trustshield-staticfiles")
+STATIC_ROOT = Path(os.environ.get("STATIC_ROOT", "/tmp/trustshield-staticfiles"))
+STATIC_ROOT.mkdir(parents=True, exist_ok=True)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WHITENOISE_MAX_AGE = 31536000  # 1 year cache for static assets
 
