@@ -1,0 +1,5 @@
+streamlit==1.66.0
+requests==2.34.2
+joblib==1.6.0
+scikit-learn==1.9.1
+numpy==2.5.4
