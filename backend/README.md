@@ -127,7 +127,8 @@ Rate limits: 30 checks per minute per user, 10 auth attempts per minute,
 - Set `INDICATOR_HASH_KEY` explicitly. Changing it later resets community memory.
 - Run under gunicorn with `ML_PRELOAD=true` so models load before the first request.
 - Collect static files at startup into a writable directory; production config uses
-  `/tmp/trustshield-staticfiles` by default rather than writing under the app directory.
+  `/tmp/trustshield-staticfiles` rather than writing under the app directory. The Docker
+  startup command enforces this path even if the platform provides a different value.
 - Review the contacts in **Admin > Reporting resources** against official sources.
 - Frontend: build with `VITE_API_BASE_URL=https://<your-api-host>/api` and add the
   frontend's origin to `CORS_ALLOWED_ORIGINS`. `frontend/vercel.json` provides the
